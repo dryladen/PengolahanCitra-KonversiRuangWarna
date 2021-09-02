@@ -1,3 +1,31 @@
+import cv2 as cv  # library untuk image prossecing
+import numpy as np
+
+
+def konversiRuangWarna():
+    print("""
+    1. RGB ke HLS
+    2. RGB ke HSV
+    3. RGB ke GRAY
+    4. RGB ke LUV
+    5. RGB ke LAB
+    """)
+    menuKonversi = input("Masukan pilihan : ")
+    if(menuKonversi == "1"):
+        pass
+    elif(menuKonversi == "2"):
+        pass
+    elif(menuKonversi == "3"):
+        pass
+    elif(menuKonversi == "4"):
+        pass
+    elif(menuKonversi == "5"):
+        pass
+    else:
+        pass
+
+
+fotoBunga = cv.imread("")
 while(True):
     print("="*64)
     print(">> Program Konversi Ruang Warna")
@@ -16,13 +44,6 @@ while(True):
         """)
         menuFoto = input("Masukan pilihan : ")
     elif(menuUtama == "2"):
-        print("""
-        1. RGB ke HLS
-        2. RGB ke HSV
-        3. RGB ke GRAY
-        4. RGB ke LUV
-        5. RGB ke LAB
-        """)
-        menuKonversi = input("Masukan pilihan : ")
+        konversiRuangWarna()
     elif(menuUtama == "3"):
         break
