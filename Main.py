@@ -8,9 +8,8 @@ def KonversiWarna(foto, warna, judul):
     cv.waitKey()
 
 
-def menuKonversiRuangWarna():
-    dim = (269, 392)
-    resized = cv.resize(fotoBunga, dim)
+def menuKonversiRuangWarna(foto):
+
     print("""
     1. RGB ke HLS
     2. RGB ke HSV
@@ -20,39 +19,42 @@ def menuKonversiRuangWarna():
     """)
     menuKonversi = input("Masukan pilihan : ")
     if(menuKonversi == "1"):
-        warna = cv.cvtColor(resized, cv.COLOR_RGB2HLS)
-        KonversiWarna(resized, warna, "RGB ke HLS")
+        warna = cv.cvtColor(foto, cv.COLOR_RGB2HLS)
+        KonversiWarna(foto, warna, "RGB ke HLS")
     elif(menuKonversi == "2"):
-        warna = cv.cvtColor(resized, cv.COLOR_RGB2HSV)
-        KonversiWarna(resized, warna, "RGB ke HSV")
+        warna = cv.cvtColor(foto, cv.COLOR_RGB2HSV)
+        KonversiWarna(foto, warna, "RGB ke HSV")
     elif(menuKonversi == "3"):
-        warna = cv.cvtColor(resized, cv.COLOR_RGB2YCrCb)
-        KonversiWarna(resized, warna, "RGB ke YCrCb")
+        warna = cv.cvtColor(foto, cv.COLOR_RGB2YCrCb)
+        KonversiWarna(foto, warna, "RGB ke YCrCb")
     elif(menuKonversi == "4"):
-        warna = cv.cvtColor(resized, cv.COLOR_RGB2LUV)
-        KonversiWarna(resized, warna, "RGB ke LUV")
+        warna = cv.cvtColor(foto, cv.COLOR_RGB2LUV)
+        KonversiWarna(foto, warna, "RGB ke LUV")
     elif(menuKonversi == "5"):
-        warna = cv.cvtColor(resized, cv.COLOR_RGB2LAB)
-        KonversiWarna(resized, warna, "RGB ke LAB")
+        warna = cv.cvtColor(foto, cv.COLOR_RGB2LAB)
+        KonversiWarna(foto, warna, "RGB ke LAB")
     else:
         print("Piihan tidak ada")
 
 
 fotoBunga = cv.imread("Foto bunga.jpeg")
+dimension = (369, 492)
+resized = cv.resize(fotoBunga, dimension)
 while(True):
     print("="*64)
     print(">> Program Konversi Ruang Warna")
     print("="*64)
     print("""
-    1. Pilih Foto
+    1. Lihat foto
     2. Konversi Ruang Warna
     3. Exit Program
     """)
     print("="*64)
     menuUtama = input("Masukan pilihan : ")
     if(menuUtama == "1"):
-        pass
+        cv.imshow("Foto Asli", resized)
+        cv.waitKey()
     elif(menuUtama == "2"):
-        menuKonversiRuangWarna()
+        menuKonversiRuangWarna(resized)
     elif(menuUtama == "3"):
         break
