@@ -41,24 +41,29 @@ def menuKonversiRuangWarna(foto):
         print("Piihan tidak ada")
 
 
-fotoBunga = cv.imread("Foto bunga.jpeg")
-dimension = (369, 492)  # ukuran foto yang baru
-foto = cv.resize(fotoBunga, dimension)  # untuk mengatur ukuran foto
-while(True):
-    print("="*64)
-    print(">> Program Konversi Ruang Warna")
-    print("="*64)
-    print("""
-    1. Lihat foto
-    2. Konversi Ruang Warna
-    3. Exit Program
-    """)
-    print("="*64)
-    menuUtama = input("Masukan pilihan : ")
-    if(menuUtama == "1"):
-        cv.imshow("Foto Asli", foto)  # untuk menampilkan foto ke layar
-        cv.waitKey()  # menunggu inputan untuk menutup windows foto
-    elif(menuUtama == "2"):
-        menuKonversiRuangWarna(foto)
-    elif(menuUtama == "3"):
-        break
+def main():
+    fotoBunga = cv.imread("Foto bunga.jpeg")
+    dimension = (369, 492)  # ukuran foto yang baru
+    foto = cv.resize(fotoBunga, dimension)  # untuk mengatur ukuran foto
+    while(True):
+        print("="*64)
+        print(">> Program Konversi Ruang Warna")
+        print("="*64)
+        print("""
+        1. Lihat foto
+        2. Konversi Ruang Warna
+        3. Exit Program
+        """)
+        print("="*64)
+        menuUtama = input("Masukan pilihan : ")
+        if(menuUtama == "1"):
+            cv.imshow("Foto Asli", foto)  # untuk menampilkan foto ke layar
+            cv.waitKey()  # menunggu inputan untuk menutup windows foto
+        elif(menuUtama == "2"):
+            menuKonversiRuangWarna(foto)
+        elif(menuUtama == "3"):
+            print("Program Exit")
+            break
+
+
+main()
