@@ -46,7 +46,8 @@ def menuKonversiRuangWarna(foto):
 def main():
     fotoBunga = cv.imread("Foto bunga.jpeg")
     dimension = (369, 492)  # ukuran foto yang baru
-    foto = cv.resize(fotoBunga, dimension)  # untuk mengatur ukuran foto
+    # untuk mengatur dimension/ukuran foto
+    foto = cv.resize(fotoBunga, dimension)
     while(True):
         print("="*64)
         print(">> Program Konversi Ruang Warna")
