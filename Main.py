@@ -13,7 +13,7 @@ def menuKonversiRuangWarna(foto):
     print("""
     1. RGB ke HLS
     2. RGB ke HSV
-    3. RGB ke YCrCb
+    3. RGB ke YUV
     4. RGB ke LUV
     5. RGB ke LAB
     """)
@@ -28,8 +28,8 @@ def menuKonversiRuangWarna(foto):
         KonversiWarna(foto, warna, "RGB ke HSV")
     elif(menuKonversi == "3"):
         # untuk konversi ruang warna
-        warna = cv.cvtColor(foto, cv.COLOR_RGB2YCrCb)
-        KonversiWarna(foto, warna, "RGB ke YCrCb")
+        warna = cv.cvtColor(foto, cv.COLOR_RGB2YUV)
+        KonversiWarna(foto, warna, "RGB ke YUV")
     elif(menuKonversi == "4"):
         # untuk konversi ruang warna
         warna = cv.cvtColor(foto, cv.COLOR_RGB2LUV)
