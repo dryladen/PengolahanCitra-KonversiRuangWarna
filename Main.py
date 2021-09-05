@@ -40,6 +40,7 @@ def menuKonversiRuangWarna(foto):
         KonversiWarna(foto, warna, "RGB ke LAB")
     else:
         print("Piihan tidak ada")
+        input("Tekan apa saja untuk melanjutkan")
 
 
 def main():
@@ -67,6 +68,10 @@ def main():
         elif(menuUtama == "3"):
             print("Program Exit")
             break
+        else:
+            print("Pilihan tidak ada")
+            input("Tekan apa saja untuk melanjutkan")
+            os.system("cls")
 
 
 main()
