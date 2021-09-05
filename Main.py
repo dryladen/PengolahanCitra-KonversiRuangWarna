@@ -1,5 +1,6 @@
 import cv2 as cv  # library untuk image processing
 import numpy as np
+import os  # library untuk clear screen
 
 
 def KonversiWarna(foto, warna, judul):
@@ -59,8 +60,10 @@ def main():
         if(menuUtama == "1"):
             cv.imshow("Foto Asli", foto)  # untuk menampilkan foto ke layar
             cv.waitKey()  # menunggu inputan untuk menutup windows foto
+            os.system("cls")
         elif(menuUtama == "2"):
             menuKonversiRuangWarna(foto)
+            os.system("cls")
         elif(menuUtama == "3"):
             print("Program Exit")
             break
