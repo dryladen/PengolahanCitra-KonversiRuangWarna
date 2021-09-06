@@ -20,23 +20,23 @@ def menuKonversiRuangWarna(foto):
     menuKonversi = input("Masukan pilihan : ")
     if(menuKonversi == "1"):
         # untuk konversi ruang warna
-        warna = cv.cvtColor(foto, cv.COLOR_RGB2HLS)
+        warna = cv.cvtColor(foto, cv.COLOR_BGR2HLS)
         KonversiWarna(foto, warna, "RGB ke HLS")
     elif(menuKonversi == "2"):
         # untuk konversi ruang warna
-        warna = cv.cvtColor(foto, cv.COLOR_RGB2HSV)
+        warna = cv.cvtColor(foto, cv.COLOR_BGR2HSV)
         KonversiWarna(foto, warna, "RGB ke HSV")
     elif(menuKonversi == "3"):
         # untuk konversi ruang warna
-        warna = cv.cvtColor(foto, cv.COLOR_RGB2YUV)
+        warna = cv.cvtColor(foto, cv.COLOR_BGR2YUV)
         KonversiWarna(foto, warna, "RGB ke YUV")
     elif(menuKonversi == "4"):
         # untuk konversi ruang warna
-        warna = cv.cvtColor(foto, cv.COLOR_RGB2LUV)
+        warna = cv.cvtColor(foto, cv.COLOR_BGR2LUV)
         KonversiWarna(foto, warna, "RGB ke LUV")
     elif(menuKonversi == "5"):
         # untuk konversi ruang warna
-        warna = cv.cvtColor(foto, cv.COLOR_RGB2LAB)
+        warna = cv.cvtColor(foto, cv.COLOR_BGR2LAB)
         KonversiWarna(foto, warna, "RGB ke LAB")
     else:
         print("Piihan tidak ada")
