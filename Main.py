@@ -43,6 +43,59 @@ def menuKonversiRuangWarna(foto):
         input("Tekan apa saja untuk melanjutkan")
 
 
+def menuBins():
+    print("""
+    1. 256 Bins
+    2. 32 Bins
+    3. 16 Bins
+    4. 8 Bins
+    5. 4 Bins
+    """)
+    menu1 = input("Masukan pilihan : ")
+    if(menu1 == "1"):
+        pass
+    elif(menu1 == "2"):
+        pass
+    elif(menu1 == "3"):
+        pass
+    elif(menu1 == "4"):
+        pass
+    elif(menu1 == "5"):
+        pass
+    else:
+        print("Pilihan tidak ada")
+        input("Tekan apa saja untuk melanjutkan")
+
+
+def menuHistogram():
+    print("""
+    1. Full histogram
+    2. Histogram per channel
+    """)
+    menu1 = input("Masukan pilihan : ")
+    if(menu1 == "1"):
+        pass
+    elif(menu1 == "2"):
+        print("""
+        1. Channel merah
+        2. Channel Hijau
+        3. Channel Biru
+        """)
+        menu2 = input("Masukan pilihan : ")
+        if(menu2 == "1"):
+            pass
+        elif(menu2 == "2"):
+            pass
+        elif(menu2 == "3"):
+            pass
+        else:
+            print("Pilihan tidak ada")
+            input("Tekan apa saja untuk melanjutkan")
+    else:
+        print("Pilihan tidak ada")
+        input("Tekan apa saja untuk melanjutkan")
+
+
 def main():
     fotoBunga = cv.imread("Foto bunga.jpeg")
     dimension = (369, 492)  # ukuran foto yang baru
@@ -55,18 +108,19 @@ def main():
         print("""
         1. Lihat foto
         2. Konversi Ruang Warna
-        3. Exit Program
+        3. Histogram
+        4. Exit Program
         """)
         print("="*64)
         menuUtama = input("Masukan pilihan : ")
         if(menuUtama == "1"):
             cv.imshow("Foto Asli", foto)  # untuk menampilkan foto ke layar
             cv.waitKey()  # menunggu inputan untuk menutup windows foto
-            os.system("cls")
+            os.system("cls")  # membersihkan tampilan menu
         elif(menuUtama == "2"):
             menuKonversiRuangWarna(foto)
             os.system("cls")
-        elif(menuUtama == "3"):
+        elif(menuUtama == "4"):
             print("Program Exit")
             break
         else:
