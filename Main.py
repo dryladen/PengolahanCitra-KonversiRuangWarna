@@ -1,6 +1,7 @@
 import cv2 as cv  # library untuk image processing
 import numpy as np
 import os  # library untuk clear screen
+from matplotlib import pyplot as plt
 
 
 def KonversiWarna(foto, warna, judul):
@@ -41,6 +42,39 @@ def menuKonversiRuangWarna(foto):
     else:
         print("Piihan tidak ada")
         input("Tekan apa saja untuk melanjutkan")
+
+
+def menuPilihFoto(foto1, foto2, foto3):
+    foto = foto1
+    print("""
+    1. Foto pemandangan (terang)
+    2. Foto bunga (sedang)
+    3. Foto rubik (gelap)
+    """)
+    menuPilihFoto = input("Masukan pilihan : ")
+    if(menuPilihFoto == "1"):
+        # untuk menampilkan foto ke layar
+        cv.imshow("Foto Bunga", foto1)
+        cv.waitKey()  # menunggu inputan untuk menutup windows foto
+        os.system("cls")  # membersihkan tampilan menu
+        foto = foto1
+    elif(menuPilihFoto == "2"):
+        # untuk menampilkan foto ke layar
+        cv.imshow("Foto Rubik", foto2)
+        cv.waitKey()  # menunggu inputan untuk menutup windows foto
+        os.system("cls")  # membersihkan tampilan menu
+        foto = foto2
+    elif(menuPilihFoto == "3"):
+        # untuk menampilkan foto ke layar
+        cv.imshow("Foto Rubik", foto3)
+        cv.waitKey()  # menunggu inputan untuk menutup windows foto
+        os.system("cls")  # membersihkan tampilan menu
+        foto = foto3
+    else:
+        print("Pilihan tidak ada")
+        input("Tekan apa saja untuk melanjutkan")
+        os.system("cls")
+    return foto
 
 
 def menuBins():
@@ -97,16 +131,22 @@ def menuHistogram():
 
 
 def main():
+    fotoPemandangan = cv.imread("Foto pemandangan.jpeg")
     fotoBunga = cv.imread("Foto bunga.jpeg")
-    dimension = (369, 492)  # ukuran foto yang baru
+    fotoRubik = cv.imread("Foto rubik.jpg")
+    dimension1 = (369, 492)  # ukuran baru foto bunga dan pemandangan
+    dimension2 = (600, 400)  # ukuran baru foto rubik
     # untuk mengatur dimension/ukuran foto
-    foto = cv.resize(fotoBunga, dimension)
+    foto1 = cv.resize(fotoPemandangan, dimension1)
+    foto2 = cv.resize(fotoBunga, dimension1)
+    foto3 = cv.resize(fotoRubik, dimension2)
+    foto = foto1
     while(True):
         print("="*64)
         print(">> Program Konversi Ruang Warna")
         print("="*64)
         print("""
-        1. Lihat foto
+        1. Pilih foto
         2. Konversi Ruang Warna
         3. Histogram
         4. Exit Program
@@ -114,9 +154,7 @@ def main():
         print("="*64)
         menuUtama = input("Masukan pilihan : ")
         if(menuUtama == "1"):
-            cv.imshow("Foto Asli", foto)  # untuk menampilkan foto ke layar
-            cv.waitKey()  # menunggu inputan untuk menutup windows foto
-            os.system("cls")  # membersihkan tampilan menu
+            foto = menuPilihFoto(foto1, foto2, foto3)
         elif(menuUtama == "2"):
             menuKonversiRuangWarna(foto)
             os.system("cls")
