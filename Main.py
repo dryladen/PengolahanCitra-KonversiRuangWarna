@@ -10,8 +10,16 @@ def KonversiWarna(foto, warna, judul):
     cv.waitKey()  # menunggu inputan untuk menutup windows foto
 
 
-def menuKonversiRuangWarna(foto):
+def fotoResize(gambar):
+    fotoAsli = cv.imread(gambar+'.jpg' if gambar ==
+                         'Foto rubik' else gambar+'.jpeg')
+    foto = cv.resize(fotoAsli, (600, 400)
+                     if gambar == 'Foto rubik' else (369, 492))
+    return foto
 
+
+def menuKonversiRuangWarna(gambar):
+    foto = fotoResize(gambar)
     print("""
     1. RGB ke HLS
     2. RGB ke HSV
@@ -54,31 +62,16 @@ def menuPilihFoto(foto1, foto2, foto3):
     """)
     menuPilihFoto = input("Masukan pilihan : ")
     if(menuPilihFoto == "1"):
-        # untuk menampilkan foto ke layar
-        # cv.imshow("Foto Bunga", foto1)
-        # cv.waitKey()  # menunggu inputan untuk menutup windows foto
-        # os.system("cls")  # membersihkan tampilan menu
         foto = foto1
     elif(menuPilihFoto == "2"):
-        # untuk menampilkan foto ke layar
-        # cv.imshow("Foto Rubik", foto2)
-        # cv.waitKey()  # menunggu inputan untuk menutup windows foto
-        # os.system("cls")  # membersihkan tampilan menu
         foto = foto2
     elif(menuPilihFoto == "3"):
-        # untuk menampilkan foto ke layar
-        # cv.imshow("Foto Rubik", foto3)
-        # cv.waitKey()  # menunggu inputan untuk menutup windows foto
-        # os.system("cls")  # membersihkan tampilan menu
         foto = foto3
     else:
         print("Pilihan tidak ada")
         input("Tekan apa saja untuk melanjutkan")
         return foto
-    fotoTampil = cv.imread(foto+'.jpg' if foto == foto3 else foto+'.jpeg')
-    fotonih = cv.resize(fotoTampil, (600, 400)
-                        if foto == foto3 else (369, 492))
-    cv.imshow(foto, fotonih)
+    cv.imshow(foto, fotoResize(foto))
     cv.waitKey(0)
     return foto
 
