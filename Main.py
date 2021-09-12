@@ -106,6 +106,33 @@ def menuBins():
     return bins
 
 
+def perChannel(gambar):
+    foto = fotoResize(gambar)
+    b, g, r = cv.split(foto)
+    print("""
+    1. Red Channel
+    2. Green Channel
+    3. Blue Channel
+    """)
+    menu = input("Masukan pilihan : ")
+    if(menu == "1"):
+        x = r
+    elif(menu == "2"):
+        x = g
+    elif(menu == "3"):
+        x = b
+    else:
+        print("Pilihan tidak ada")
+        input("Tekan apa saja untuk melanjutkan")
+        return
+    bins = menuBins()
+    plt.subplot(121)
+    plt.imshow(x)
+    plt.subplot(122)
+    plt.hist(x.ravel(), bins, [0, 256])
+    plt.show()
+
+
 def menuHistogram(gambar):
     print("""
     1. Histogram Berwarna
@@ -115,9 +142,7 @@ def menuHistogram(gambar):
     if(menu1 == "1"):
         print("""
         1. Full Channel
-        2. Red Channel q
-        3. Green Channel 
-        4. Blue Channel 
+        2. Per Channel
         """)
         menu2 = input("Masukan pilihan : ")
         if(menu2 == "1"):
@@ -133,11 +158,7 @@ def menuHistogram(gambar):
                 plt.xlim([0, 256])
             plt.show()
         elif(menu2 == "2"):
-            pass
-        elif(menu2 == "3"):
-            pass
-        elif(menu2 == "4"):
-            pass
+            perChannel(gambar)
         else:
             print("Pilihan tidak ada")
             input("Tekan apa saja untuk melanjutkan")
