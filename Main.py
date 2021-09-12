@@ -106,9 +106,14 @@ def menuBins():
     return bins
 
 
-def perChannel(gambar):
+def menuPerChannel(gambar):
     foto = fotoResize(gambar)
-    b, g, r = cv.split(foto)
+    b, g, r = cv.split(foto)  # memisahkan warna per channel
+    # untuk mengosongkan nilai warna channel lain
+    zeros = np.zeros(foto.shape[:2], dtype='uint8')
+    red_img = cv.merge([r, zeros, zeros])
+    green_img = cv.merge([zeros, g, zeros])
+    blue_img = cv.merge([zeros, zeros, b])
     print("""
     1. Red Channel
     2. Green Channel
@@ -117,19 +122,22 @@ def perChannel(gambar):
     menu = input("Masukan pilihan : ")
     if(menu == "1"):
         x = r
+        x_img = red_img
     elif(menu == "2"):
         x = g
+        x_img = green_img
     elif(menu == "3"):
         x = b
+        x_img = blue_img
     else:
         print("Pilihan tidak ada")
         input("Tekan apa saja untuk melanjutkan")
         return
-    bins = menuBins()
-    plt.subplot(121)
-    plt.imshow(x)
+    bins = menuBins()  # menentukan bins histogram
+    plt.subplot(121)  # membagi plot
+    plt.imshow(x_img)
     plt.subplot(122)
-    plt.hist(x.ravel(), bins, [0, 256])
+    plt.hist(x.ravel(), bins, [0, 256])  # membuat histogram
     plt.show()
 
 
@@ -158,17 +166,17 @@ def menuHistogram(gambar):
                 plt.xlim([0, 256])
             plt.show()
         elif(menu2 == "2"):
-            perChannel(gambar)
+            menuPerChannel(gambar)
         else:
             print("Pilihan tidak ada")
             input("Tekan apa saja untuk melanjutkan")
     elif(menu1 == "2"):
         foto = fotoResize(gambar, True)
-        bins = menuBins()
-        plt.subplot(121)
-        plt.imshow(foto, 'gray')
+        bins = menuBins()  # untuk menentukan bins histogram
+        plt.subplot(121)  # untuk membagi plot
+        plt.imshow(foto, 'gray')  # menampilkan foto
         plt.subplot(122)
-        plt.hist(foto.ravel(), bins, [0, 256])
+        plt.hist(foto.ravel(), bins, [0, 256])  # membuat histogram
         plt.show()
     else:
         print("Pilihan tidak ada")
