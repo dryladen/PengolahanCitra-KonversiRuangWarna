@@ -10,9 +10,13 @@ def KonversiWarna(foto, warna, judul):
     cv.waitKey()  # menunggu inputan untuk menutup windows foto
 
 
-def fotoResize(gambar):
-    fotoAsli = cv.imread(gambar+'.jpg' if gambar ==
-                         'Foto rubik' else gambar+'.jpeg')
+def fotoResize(gambar, gray=False):
+    if(gray == True):
+        fotoAsli = cv.imread(gambar+'.jpg' if gambar ==
+                             'Foto rubik' else gambar+'.jpeg', 0)
+    else:
+        fotoAsli = cv.imread(gambar+'.jpg' if gambar ==
+                             'Foto rubik' else gambar+'.jpeg')
     foto = cv.resize(fotoAsli, (600, 400)
                      if gambar == 'Foto rubik' else (369, 492))
     return foto
@@ -102,7 +106,7 @@ def menuBins():
     return bins
 
 
-def menuHistogram(foto):
+def menuHistogram(gambar):
     print("""
     1. Histogram Berwarna
     2. Histogram GraySclae
@@ -111,18 +115,20 @@ def menuHistogram(foto):
     if(menu1 == "1"):
         print("""
         1. Full Channel
-        2. Red Channel 
+        2. Red Channel q
         3. Green Channel 
         4. Blue Channel 
         """)
         menu2 = input("Masukan pilihan : ")
         if(menu2 == "1"):
+            fotorgb = cv.cvtColor(fotoResize(gambar), cv.COLOR_BGR2RGB)
             color = ('b', 'g', 'r')
             plt.subplot(121)
-            plt.imshow(foto)
+            plt.imshow(fotorgb)
             plt.subplot(122)
             for i, col in enumerate(color):
-                histr = cv.calcHist([foto], [i], None, [256], [0, 256])
+                histr = cv.calcHist([fotoResize(gambar)], [
+                                    i], None, [256], [0, 256])
                 plt.plot(histr, color=col)
                 plt.xlim([0, 256])
             plt.show()
@@ -136,12 +142,12 @@ def menuHistogram(foto):
             print("Pilihan tidak ada")
             input("Tekan apa saja untuk melanjutkan")
     elif(menu1 == "2"):
-        fotoGrayscale = cv.cvtColor(foto, cv.COLOR_BGR2GRAY)
+        foto = fotoResize(gambar, True)
         bins = menuBins()
         plt.subplot(121)
-        plt.imshow(fotoGrayscale, 'gray')
+        plt.imshow(foto, 'gray')
         plt.subplot(122)
-        plt.hist(fotoGrayscale.ravel(), bins, [0, 256])
+        plt.hist(foto.ravel(), bins, [0, 256])
         plt.show()
     else:
         print("Pilihan tidak ada")
@@ -152,12 +158,6 @@ def main():
     fotoPemandangan = "Foto pemandangan"
     fotoBunga = "Foto bunga"
     fotoRubik = "Foto rubik"
-    dimension1 = (369, 492)  # ukuran baru foto bunga dan pemandangan
-    dimension2 = (600, 400)  # ukuran baru foto rubik
-    # untuk mengatur dimension/ukuran foto
-    # foto1 = cv.resize(fotoPemandangan, dimension1)
-    # foto2 = cv.resize(fotoBunga, dimension1)
-    # foto3 = cv.resize(fotoRubik, dimension2)
     foto = fotoPemandangan
     while(True):
         print("="*64)
