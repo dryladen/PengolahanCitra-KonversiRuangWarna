@@ -1,7 +1,7 @@
 import cv2 as cv  # library untuk image processing
 import numpy as np
 import os  # library untuk clear screen
-from matplotlib import pyplot as plt
+from matplotlib import pyplot as plt  # untuk menampilkan histogram
 
 
 def KonversiWarna(foto, warna, judul):
@@ -25,11 +25,11 @@ def fotoResize(gambar, gray=False):
 def menuKonversiRuangWarna(gambar):
     foto = fotoResize(gambar)
     print("""
-    1. RGB ke HLS
-    2. RGB ke HSV
-    3. RGB ke YUV
-    4. RGB ke LUV
-    5. RGB ke LAB
+    |  1. RGB ke HLS  |
+    |  2. RGB ke HSV  |
+    |  3. RGB ke YUV  |
+    |  4. RGB ke LUV  |
+    |  5. RGB ke LAB  |
     """)
     menuKonversi = input("Masukan pilihan : ")
     if(menuKonversi == "1"):
@@ -60,9 +60,9 @@ def menuKonversiRuangWarna(gambar):
 def menuPilihFoto(foto1, foto2, foto3):
     foto = foto1
     print("""
-    1. Foto pemandangan (terang)
-    2. Foto bunga (sedang)
-    3. Foto rubik (gelap)
+    |  1. Foto pemandangan (terang)  |
+    |  2. Foto bunga (sedang)        |
+    |  3. Foto rubik (gelap)         |
     """)
     menuPilihFoto = input("Masukan pilihan : ")
     if(menuPilihFoto == "1"):
@@ -83,11 +83,11 @@ def menuPilihFoto(foto1, foto2, foto3):
 def menuBins():
     bins = 256
     print("""
-    1. 256 Bins
-    2. 32 Bins
-    3. 16 Bins
-    4. 8 Bins
-    5. 4 Bins
+    |  1. 256 Bins  |
+    |  2. 32 Bins   |
+    |  3. 16 Bins   |
+    |  4. 8 Bins    |
+    |  5. 4 Bins    |
     """)
     menu1 = input("Masukan pilihan : ")
     if(menu1 == "1"):
@@ -115,9 +115,9 @@ def menuPerChannel(gambar):
     green_img = cv.merge([zeros, g, zeros])
     blue_img = cv.merge([zeros, zeros, b])
     print("""
-    1. Red Channel
-    2. Green Channel
-    3. Blue Channel
+    |  1. Red Channel    |
+    |  2. Green Channel  |
+    |  3. Blue Channel   |
     """)
     menu = input("Masukan pilihan : ")
     if(menu == "1"):
@@ -138,19 +138,21 @@ def menuPerChannel(gambar):
     plt.imshow(x_img)
     plt.subplot(122)
     plt.hist(x.ravel(), bins, [0, 256])  # membuat histogram
+    plt.ylabel("[ Jumlah Intensitas ]")
+    plt.xlabel("[ Nilai Intensitas ]")
     plt.show()
 
 
 def menuHistogram(gambar):
     print("""
-    1. Histogram Berwarna
-    2. Histogram GraySclae
+    |  1. Histogram Berwarna   |
+    |  2. Histogram GrayScale  |
     """)
     menu1 = input("Masukan pilihan : ")
     if(menu1 == "1"):
         print("""
-        1. Full Channel
-        2. Per Channel
+        |  1. Full Channel  |
+        |  2. Per Channel   |
         """)
         menu2 = input("Masukan pilihan : ")
         if(menu2 == "1"):
@@ -164,6 +166,8 @@ def menuHistogram(gambar):
                                     i], None, [256], [0, 256])
                 plt.plot(histr, color=col)
                 plt.xlim([0, 256])
+            plt.ylabel("[ Jumlah Intensitas ]")
+            plt.xlabel("[ Nilai Intensitas ]")
             plt.show()
         elif(menu2 == "2"):
             menuPerChannel(gambar)
@@ -177,6 +181,8 @@ def menuHistogram(gambar):
         plt.imshow(foto, 'gray')  # menampilkan foto
         plt.subplot(122)
         plt.hist(foto.ravel(), bins, [0, 256])  # membuat histogram
+        plt.ylabel("[ Jumlah Intensitas ]")
+        plt.xlabel("[ Nilai Intensitas ]")
         plt.show()
     else:
         print("Pilihan tidak ada")
@@ -193,10 +199,10 @@ def main():
         print(">> Program Pengolahan Citra")
         print("="*64)
         print("""
-        1. Pilih foto
-        2. Konversi Ruang Warna
-        3. Histogram
-        4. Exit Program
+        |  1. Pilih foto            |
+        |  2. Konversi Ruang Warna  |
+        |  3. Histogram             |
+        |  4. Exit Program          |
         """)
         print("="*64)
         menuUtama = input("Masukan pilihan : ")
@@ -210,7 +216,7 @@ def main():
             menuHistogram(foto)
             os.system("cls")
         elif(menuUtama == "4"):
-            print("Program Exit")
+            print("Exit")
             break
         else:
             print("Pilihan tidak ada")
