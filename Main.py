@@ -11,44 +11,47 @@ def KonversiWarna(foto, warna, judul):
 
 
 def fotoResize(gambar, gray=False):
-    if(gray == True):
-        fotoAsli = cv.imread(gambar+'.jpg' if gambar ==
-                             'Foto rubik' else gambar+'.jpeg', 0)
+    if gray == True:
+        fotoAsli = cv.imread(
+            gambar + ".jpg" if gambar == "Foto rubik" else gambar + ".jpeg", 0
+        )
     else:
-        fotoAsli = cv.imread(gambar+'.jpg' if gambar ==
-                             'Foto rubik' else gambar+'.jpeg')
-    foto = cv.resize(fotoAsli, (600, 400)
-                     if gambar == 'Foto rubik' else (369, 492))
+        fotoAsli = cv.imread(
+            gambar + ".jpg" if gambar == "Foto rubik" else gambar + ".jpeg"
+        )
+    foto = cv.resize(fotoAsli, (600, 400) if gambar == "Foto rubik" else (369, 492))
     return foto
 
 
 def menuKonversiRuangWarna(gambar):
     foto = fotoResize(gambar)
-    print("""
+    print(
+        """
     |  1. RGB ke HLS  |
     |  2. RGB ke HSV  |
     |  3. RGB ke YUV  |
     |  4. RGB ke LUV  |
     |  5. RGB ke LAB  |
-    """)
+    """
+    )
     menuKonversi = input("Masukan pilihan : ")
-    if(menuKonversi == "1"):
+    if menuKonversi == "1":
         # untuk konversi ruang warna
         warna = cv.cvtColor(foto, cv.COLOR_BGR2HLS)
         KonversiWarna(foto, warna, "RGB ke HLS")
-    elif(menuKonversi == "2"):
+    elif menuKonversi == "2":
         # untuk konversi ruang warna
         warna = cv.cvtColor(foto, cv.COLOR_BGR2HSV)
         KonversiWarna(foto, warna, "RGB ke HSV")
-    elif(menuKonversi == "3"):
+    elif menuKonversi == "3":
         # untuk konversi ruang warna
         warna = cv.cvtColor(foto, cv.COLOR_BGR2YUV)
         KonversiWarna(foto, warna, "RGB ke YUV")
-    elif(menuKonversi == "4"):
+    elif menuKonversi == "4":
         # untuk konversi ruang warna
         warna = cv.cvtColor(foto, cv.COLOR_BGR2LUV)
         KonversiWarna(foto, warna, "RGB ke LUV")
-    elif(menuKonversi == "5"):
+    elif menuKonversi == "5":
         # untuk konversi ruang warna
         warna = cv.cvtColor(foto, cv.COLOR_BGR2LAB)
         KonversiWarna(foto, warna, "RGB ke LAB")
@@ -59,17 +62,19 @@ def menuKonversiRuangWarna(gambar):
 
 def menuPilihFoto(foto1, foto2, foto3):
     foto = foto1
-    print("""
+    print(
+        """
     |  1. Foto pemandangan (terang)  |
     |  2. Foto bunga (sedang)        |
     |  3. Foto rubik (gelap)         |
-    """)
+    """
+    )
     menuPilihFoto = input("Masukan pilihan : ")
-    if(menuPilihFoto == "1"):
+    if menuPilihFoto == "1":
         foto = foto1
-    elif(menuPilihFoto == "2"):
+    elif menuPilihFoto == "2":
         foto = foto2
-    elif(menuPilihFoto == "3"):
+    elif menuPilihFoto == "3":
         foto = foto3
     else:
         print("Pilihan tidak ada")
@@ -82,23 +87,25 @@ def menuPilihFoto(foto1, foto2, foto3):
 
 def menuBins():
     bins = 256
-    print("""
+    print(
+        """
     |  1. 256 Bins  |
     |  2. 32 Bins   |
     |  3. 16 Bins   |
     |  4. 8 Bins    |
     |  5. 4 Bins    |
-    """)
+    """
+    )
     menu1 = input("Masukan pilihan : ")
-    if(menu1 == "1"):
+    if menu1 == "1":
         bins = 256
-    elif(menu1 == "2"):
+    elif menu1 == "2":
         bins = 32
-    elif(menu1 == "3"):
+    elif menu1 == "3":
         bins = 16
-    elif(menu1 == "4"):
+    elif menu1 == "4":
         bins = 8
-    elif(menu1 == "5"):
+    elif menu1 == "5":
         bins = 4
     else:
         print("Pilihan tidak ada")
@@ -110,23 +117,25 @@ def menuPerChannel(gambar):
     foto = fotoResize(gambar)
     b, g, r = cv.split(foto)  # memisahkan warna per channel
     # untuk mengosongkan nilai warna channel lain
-    zeros = np.zeros(foto.shape[:2], dtype='uint8')
+    zeros = np.zeros(foto.shape[:2], dtype="uint8")
     red_img = cv.merge([r, zeros, zeros])
     green_img = cv.merge([zeros, g, zeros])
     blue_img = cv.merge([zeros, zeros, b])
-    print("""
+    print(
+        """
     |  1. Red Channel    |
     |  2. Green Channel  |
     |  3. Blue Channel   |
-    """)
+    """
+    )
     menu = input("Masukan pilihan : ")
-    if(menu == "1"):
+    if menu == "1":
         x = r
         x_img = red_img
-    elif(menu == "2"):
+    elif menu == "2":
         x = g
         x_img = green_img
-    elif(menu == "3"):
+    elif menu == "3":
         x = b
         x_img = blue_img
     else:
@@ -144,41 +153,44 @@ def menuPerChannel(gambar):
 
 
 def menuHistogram(gambar):
-    print("""
+    print(
+        """
     |  1. Histogram Berwarna   |
     |  2. Histogram GrayScale  |
-    """)
+    """
+    )
     menu1 = input("Masukan pilihan : ")
-    if(menu1 == "1"):
-        print("""
+    if menu1 == "1":
+        print(
+            """
         |  1. Full Channel  |
         |  2. Per Channel   |
-        """)
+        """
+        )
         menu2 = input("Masukan pilihan : ")
-        if(menu2 == "1"):
+        if menu2 == "1":
             fotorgb = cv.cvtColor(fotoResize(gambar), cv.COLOR_BGR2RGB)
-            color = ('b', 'g', 'r')
+            color = ("b", "g", "r")
             plt.subplot(121)
             plt.imshow(fotorgb)
             plt.subplot(122)
             for i, col in enumerate(color):
-                histr = cv.calcHist([fotoResize(gambar)], [
-                                    i], None, [256], [0, 256])
+                histr = cv.calcHist([fotoResize(gambar)], [i], None, [256], [0, 256])
                 plt.plot(histr, color=col)
                 plt.xlim([0, 256])
             plt.ylabel("[ Jumlah Intensitas ]")
             plt.xlabel("[ Nilai Intensitas ]")
             plt.show()
-        elif(menu2 == "2"):
+        elif menu2 == "2":
             menuPerChannel(gambar)
         else:
             print("Pilihan tidak ada")
             input("Tekan apa saja untuk melanjutkan")
-    elif(menu1 == "2"):
+    elif menu1 == "2":
         foto = fotoResize(gambar, True)
         bins = menuBins()  # untuk menentukan bins histogram
         plt.subplot(121)  # untuk membagi plot
-        plt.imshow(foto, 'gray')  # menampilkan foto
+        plt.imshow(foto, "gray")  # menampilkan foto
         plt.subplot(122)
         plt.hist(foto.ravel(), bins, [0, 256])  # membuat histogram
         plt.ylabel("[ Jumlah Intensitas ]")
@@ -189,33 +201,53 @@ def menuHistogram(gambar):
         input("Tekan apa saja untuk melanjutkan")
 
 
+def imageEnchancement():
+    print(
+        """
+    |  1. Image Sharpening   |
+    |  2. Image Smoothing
+    |  3. Image Brighness
+    """
+    )
+    menu1 = input("Masukan pilihan : ")
+    if menu1 == "1":
+        pass
+    elif menu1 == "2":
+        pass
+    else:
+        print("Pilihan tidak ada")
+        input("Tekan apa saja untuk melanjutkan")
+
+
 def main():
     fotoPemandangan = "Foto pemandangan"
     fotoBunga = "Foto bunga"
     fotoRubik = "Foto rubik"
     foto = fotoPemandangan
-    while(True):
-        print("="*64)
+    while True:
+        print("=" * 64)
         print(">> Program Pengolahan Citra")
-        print("="*64)
-        print("""
+        print("=" * 64)
+        print(
+            """
         |  1. Pilih foto            |
         |  2. Konversi Ruang Warna  |
         |  3. Histogram             |
         |  4. Exit Program          |
-        """)
-        print("="*64)
+        """
+        )
+        print("=" * 64)
         menuUtama = input("Masukan pilihan : ")
-        if(menuUtama == "1"):
+        if menuUtama == "1":
             foto = menuPilihFoto(fotoPemandangan, fotoBunga, fotoRubik)
             os.system("cls")
-        elif(menuUtama == "2"):
+        elif menuUtama == "2":
             menuKonversiRuangWarna(foto)
             os.system("cls")
-        elif(menuUtama == "3"):
+        elif menuUtama == "3":
             menuHistogram(foto)
             os.system("cls")
-        elif(menuUtama == "4"):
+        elif menuUtama == "4":
             print("Exit")
             break
         else:
