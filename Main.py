@@ -201,22 +201,41 @@ def menuHistogram(gambar):
         input("Tekan apa saja untuk melanjutkan")
 
 
-def imageEnchancement():
-    print(
+def sharpening(foto):
+    kernel = np.array([[0, -1, 0], [-1, 5, -1], [0, -1, 0]])
+
+    image_sharp = cv.filter2D(src=foto, ddepth=-1, kernel=kernel)
+
+    cv.imshow("Original", foto)
+    cv.imshow("Sharpening", image_sharp)
+    cv.waitKey(0)
+
+
+def imageEnchancement(foto):
+    os.system("cls")
+    gambar = fotoResize(foto)
+    while True:
+        print(
+            """
+        |  1. Image Sharpening   |
+        |  2. Image Smoothing    |
+        |  3. Image Brighness    |
+        |  4. Kembali ke menu    |
         """
-    |  1. Image Sharpening   |
-    |  2. Image Smoothing
-    |  3. Image Brighness
-    """
-    )
-    menu1 = input("Masukan pilihan : ")
-    if menu1 == "1":
-        pass
-    elif menu1 == "2":
-        pass
-    else:
-        print("Pilihan tidak ada")
-        input("Tekan apa saja untuk melanjutkan")
+        )
+        menu1 = input("Masukan pilihan : ")
+        if menu1 == "1":
+            sharpening(gambar)
+        elif menu1 == "2":
+            pass
+        elif menu1 == "3":
+            pass
+        elif menu1 == "4":
+            break
+        else:
+            print("Pilihan tidak ada")
+            input("Tekan apa saja untuk melanjutkan")
+            os.system("cls")
 
 
 def main():
@@ -233,7 +252,8 @@ def main():
         |  1. Pilih foto            |
         |  2. Konversi Ruang Warna  |
         |  3. Histogram             |
-        |  4. Exit Program          |
+        |  4. Perbaikan Citra       |
+        |  5. Exit Program          |
         """
         )
         print("=" * 64)
@@ -248,6 +268,8 @@ def main():
             menuHistogram(foto)
             os.system("cls")
         elif menuUtama == "4":
+            imageEnchancement(foto)
+        elif menuUtama == "5":
             print("Exit")
             break
         else:
