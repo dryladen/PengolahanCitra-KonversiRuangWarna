@@ -25,6 +25,7 @@ def fotoResize(gambar, gray=False):
 
 def menuKonversiRuangWarna(gambar):
     foto = fotoResize(gambar)
+    print("=" * 64)
     print(
         """
     |  1. RGB ke HLS  |
@@ -34,6 +35,7 @@ def menuKonversiRuangWarna(gambar):
     |  5. RGB ke LAB  |
     """
     )
+    print("=" * 64)
     menuKonversi = input("Masukan pilihan : ")
     if menuKonversi == "1":
         # untuk konversi ruang warna
@@ -62,6 +64,7 @@ def menuKonversiRuangWarna(gambar):
 
 def menuPilihFoto(foto1, foto2, foto3):
     foto = foto1
+    print("=" * 64)
     print(
         """
     |  1. Foto pemandangan (terang)  |
@@ -69,6 +72,7 @@ def menuPilihFoto(foto1, foto2, foto3):
     |  3. Foto rubik (gelap)         |
     """
     )
+    print("=" * 64)
     menuPilihFoto = input("Masukan pilihan : ")
     if menuPilihFoto == "1":
         foto = foto1
@@ -87,6 +91,7 @@ def menuPilihFoto(foto1, foto2, foto3):
 
 def menuBins():
     bins = 256
+    print("=" * 64)
     print(
         """
     |  1. 256 Bins  |
@@ -96,6 +101,7 @@ def menuBins():
     |  5. 4 Bins    |
     """
     )
+    print("=" * 64)
     menu1 = input("Masukan pilihan : ")
     if menu1 == "1":
         bins = 256
@@ -121,6 +127,7 @@ def menuPerChannel(gambar):
     red_img = cv.merge([r, zeros, zeros])
     green_img = cv.merge([zeros, g, zeros])
     blue_img = cv.merge([zeros, zeros, b])
+    print("=" * 64)
     print(
         """
     |  1. Red Channel    |
@@ -128,6 +135,7 @@ def menuPerChannel(gambar):
     |  3. Blue Channel   |
     """
     )
+    print("=" * 64)
     menu = input("Masukan pilihan : ")
     if menu == "1":
         x = r
@@ -153,20 +161,24 @@ def menuPerChannel(gambar):
 
 
 def menuHistogram(gambar):
+    print("=" * 64)
     print(
         """
     |  1. Histogram Berwarna   |
     |  2. Histogram GrayScale  |
     """
     )
+    print("=" * 64)
     menu1 = input("Masukan pilihan : ")
     if menu1 == "1":
+        print("=" * 64)
         print(
             """
         |  1. Full Channel  |
         |  2. Per Channel   |
         """
         )
+        print("=" * 64)
         menu2 = input("Masukan pilihan : ")
         if menu2 == "1":
             fotorgb = cv.cvtColor(fotoResize(gambar), cv.COLOR_BGR2RGB)
@@ -211,25 +223,55 @@ def sharpening(foto):
     cv.waitKey(0)
 
 
+def imageSretching(foto):
+    imageSretch = cv.addWeighted(foto, 1, np.zeros(foto.shape, foto.dtype), 1, 0)
+    cv.imshow("Original Image", foto)
+    cv.imshow("Contrast Sretching", imageSretch)
+    cv.waitKey(0)
+
+
+def imageBrightness(foto):
+    hsv = cv.cvtColor(foto, cv.COLOR_BGR2HSV)
+    nilai = int(input("Masukan nilai brightness : "))
+    # nilai = 10
+    # dengan proses split hsv
+    h, s, v = cv.split(hsv)
+    v += nilai
+    hsv = cv.merge((h, s, v))
+    brightness_img = cv.cvtColor(hsv, cv.COLOR_HSV2BGR)
+    cv.imshow("original", foto)
+    cv.imshow("bright", brightness_img)
+    cv.waitKey(0)
+
+
+def imageBlur(foto):
+    imgBlur = cv.GaussianBlur(foto, (7, 7), 0)
+    cv.imshow("Original", foto)
+    cv.imshow("Blur Image", imgBlur)
+    cv.waitKey(0)
+
+
 def imageEnchancement(foto):
     os.system("cls")
     gambar = fotoResize(foto)
     while True:
+        print("=" * 64)
         print(
             """
         |  1. Image Sharpening   |
-        |  2. Image Smoothing    |
-        |  3. Image Brighness    |
+        |  2. Image Blur         |
+        |  3. Image Brightness   |
         |  4. Kembali ke menu    |
         """
         )
+        print("=" * 64)
         menu1 = input("Masukan pilihan : ")
         if menu1 == "1":
             sharpening(gambar)
         elif menu1 == "2":
-            pass
+            imageBlur(gambar)
         elif menu1 == "3":
-            pass
+            imageBrightness(gambar)
         elif menu1 == "4":
             break
         else:
@@ -252,7 +294,7 @@ def main():
         |  1. Pilih foto            |
         |  2. Konversi Ruang Warna  |
         |  3. Histogram             |
-        |  4. Perbaikan Citra       |
+        |  4. Image Enchancement    |
         |  5. Exit Program          |
         """
         )
