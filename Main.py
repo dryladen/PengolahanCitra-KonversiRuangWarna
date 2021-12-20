@@ -21,14 +21,10 @@ def bandingGambar(foto1, foto2, judul):
 
 def fotoResize(gambar, gray=False):
     if gray == True:
-        fotoAsli = cv.imread(
-            gambar + ".jpg" if gambar == "Foto rubik" else gambar + ".jpeg", 0
-        )
+        fotoAsli = cv.imread(gambar + ".jpeg", 0)
     else:
-        fotoAsli = cv.imread(
-            gambar + ".jpg" if gambar == "Foto rubik" else gambar + ".jpeg"
-        )
-    foto = cv.resize(fotoAsli, (600, 400) if gambar == "Foto rubik" else (369, 492))
+        fotoAsli = cv.imread(gambar + ".jpeg")
+    foto = cv.resize(fotoAsli, (600, 400) if gambar == "bola" else (369, 492))
     return foto
 
 
@@ -233,15 +229,15 @@ def imageSretching(foto):
     bandingGambar(foto, imageSretch, "Stretching")
 
 
-def imageBrightness(foto):
-    hsv = cv.cvtColor(foto, cv.COLOR_BGR2HSV)
-    nilai = int(input("Masukan nilai brightness [ > 20 ] : "))
-    # dengan proses split hsv
-    h, s, v = cv.split(hsv)
-    v += nilai
-    hsv = cv.merge((h, s, v))
-    brightness_img = cv.cvtColor(hsv, cv.COLOR_HSV2BGR)
-    bandingGambar(foto, brightness_img, "Brightness")
+# def imageBrightness(foto):
+#     hsv = cv.cvtColor(foto, cv.COLOR_BGR2HSV)
+#     nilai = int(input("Masukan nilai brightness [ > 20 ] : "))
+#     # dengan proses split hsv
+#     h, s, v = cv.split(hsv)
+#     v += nilai
+#     hsv = cv.merge((h, s, v))
+#     brightness_img = cv.cvtColor(hsv, cv.COLOR_HSV2BGR)
+#     bandingGambar(foto, brightness_img, "Brightness")
 
 
 def imageBlur(foto):
@@ -258,7 +254,6 @@ def imageEnchancement(foto):
             """
         |  1. Image Sharpening   |
         |  2. Image Blur         |
-        |  3. Image Brightness   |
         |  4. Kembali ke menu    |
         """
         )
@@ -268,8 +263,6 @@ def imageEnchancement(foto):
             sharpening(gambar)
         elif menu1 == "2":
             imageBlur(gambar)
-        elif menu1 == "3":
-            imageBrightness(gambar)
         elif menu1 == "4":
             break
         else:
@@ -351,12 +344,15 @@ def segmentationColorSpace(foto):
     upper = np.array(
         [hsvRoi[:, :, 0].max(), hsvRoi[:, :, 1].max(), hsvRoi[:, :, 2].max()]
     )
-
     mask = cv.inRange(blur, lower, upper)
     res = cv.bitwise_and(image, image, mask=mask)
+    bandingGambar(image, res, "Segmentation")
 
-    cv.imshow("stack", np.hstack([image, res]))
-    cv.waitKey(0)
+
+def cannyEdgeDetector(foto):
+    image = fotoResize(foto, True)
+    edges = cv.Canny(image, 50, 200)
+    bandingGambar(image, edges, "Segmentation")
 
 
 def main():
@@ -380,8 +376,9 @@ def main():
         |  2. Konversi Ruang Warna  |
         |  3. Histogram             |
         |  4. Image Enchancement    |
-        |  5. Segmentation       |
-        |  6. Exit Program          |
+        |  5. Segmentation          |
+        |  6. Edge Detection        |
+        |  7. Exit Program          |
         """
         )
         print("=" * 64)
@@ -400,6 +397,8 @@ def main():
         elif menuUtama == "5":
             segmentationColorSpace(foto)
         elif menuUtama == "6":
+            cannyEdgeDetector(foto)
+        elif menuUtama == "7":
             print("Exit")
             break
         else:
