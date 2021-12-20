@@ -2,6 +2,15 @@ import cv2 as cv  # library untuk image processing
 import numpy as np
 import os  # library untuk clear screen
 from matplotlib import pyplot as plt  # untuk menampilkan histogram
+import argparse
+
+ap = argparse.ArgumentParser()
+ap.add_argument("-i", "--image", required=False, help="Path to the image")
+args = vars(ap.parse_args())
+x_start, y_start, x_end, y_end = 0, 0, 0, 0
+cropping = False
+getROI = False
+refPt = []
 
 
 def bandingGambar(foto1, foto2, judul):
@@ -269,12 +278,99 @@ def imageEnchancement(foto):
             os.system("cls")
 
 
+def equalHistColor(img):
+    img_yuv = cv.cvtColor(img, cv.COLOR_BGR2YUV)
+    img_yuv[:, :, 0] = cv.equalizeHist(img_yuv[:, :, 0])
+    img_output = cv.cvtColor(img_yuv, cv.COLOR_YUV2BGR)
+    return img_output
+
+
+def click_and_crop(event, x, y, flags, param):
+    global x_start, y_start, x_end, y_end, cropping, getROI
+    if event == cv.EVENT_LBUTTONDOWN:
+        x_start, y_start, x_end, y_end = x, y, x, y
+        cropping = True
+    elif event == cv.EVENT_MOUSEMOVE:
+        if cropping == True:
+            x_end, y_end = x, y
+    elif event == cv.EVENT_LBUTTONUP:
+        x_end, y_end = x, y
+        cropping = False
+        getROI = True
+
+
+def segmentationColorSpace(foto):
+    global x_start, y_start, x_end, y_end, cropping, getROI
+    image = fotoResize(foto)
+    clone = image.copy()
+
+    cv.namedWindow("image")
+    cv.setMouseCallback("image", click_and_crop)
+
+    while True:
+        i = image.copy()
+        if not cropping and not getROI:
+            cv.imshow("image", image)
+        elif cropping and not getROI:
+            cv.rectangle(i, (x_start, y_start), (x_end, y_end), (0, 255, 0), 2)
+            cv.imshow("image", i)
+        elif not cropping and getROI:
+            cv.rectangle(image, (x_start, y_start), (x_end, y_end), (0, 255, 0), 2)
+            cv.imshow("image", image)
+        key = cv.waitKey(1) & 0xFF
+        if key == ord("r"):
+            image = clone.copy()
+            getROI = False
+            break
+        elif key == ord("c"):
+            break
+
+    refPt = [(x_start, y_start), (x_end, y_end)]
+    if len(refPt) == 2:
+        roi = clone[refPt[0][1] : refPt[1][1], refPt[0][0] : refPt[1][0]]
+        hsvRoi = cv.cvtColor(roi, cv.COLOR_BGR2HSV)
+        print(
+            "min H = {}, min S = {}, min V = {}; max H = {}, max S = {}, max V = {}".format(
+                hsvRoi[:, :, 0].min(),
+                hsvRoi[:, :, 1].min(),
+                hsvRoi[:, :, 2].min(),
+                hsvRoi[:, :, 0].max(),
+                hsvRoi[:, :, 1].max(),
+                hsvRoi[:, :, 2].max(),
+            )
+        )
+
+    cv.destroyAllWindows()
+
+    hsv = cv.cvtColor(image, cv.COLOR_BGR2HSV)
+    blur = cv.medianBlur(hsv, 11)
+
+    lower = np.array(
+        [hsvRoi[:, :, 0].min(), hsvRoi[:, :, 1].min(), hsvRoi[:, :, 2].min()]
+    )
+    upper = np.array(
+        [hsvRoi[:, :, 0].max(), hsvRoi[:, :, 1].max(), hsvRoi[:, :, 2].max()]
+    )
+
+    mask = cv.inRange(blur, lower, upper)
+    res = cv.bitwise_and(image, image, mask=mask)
+
+    cv.imshow("stack", np.hstack([image, res]))
+    cv.waitKey(0)
+
+
 def main():
-    fotoPemandangan = "Foto pemandangan"
+    global x_start, y_start, x_end, y_end, cropping, getROI
+    fotoPemandangan = "bola"
     fotoBunga = "Foto bunga"
     fotoRubik = "Foto rubik"
+
     foto = fotoPemandangan
     while True:
+        x_start, y_start, x_end, y_end = 0, 0, 0, 0
+        cropping = False
+        getROI = False
+        refPt = []
         print("=" * 64)
         print(">> Program Pengolahan Citra")
         print("=" * 64)
@@ -284,7 +380,8 @@ def main():
         |  2. Konversi Ruang Warna  |
         |  3. Histogram             |
         |  4. Image Enchancement    |
-        |  5. Exit Program          |
+        |  5. Segmentation   |
+        |  6. Exit Program          |
         """
         )
         print("=" * 64)
@@ -301,6 +398,8 @@ def main():
         elif menuUtama == "4":
             imageEnchancement(foto)
         elif menuUtama == "5":
+            segmentationColorSpace(foto)
+        elif menuUtama == "6":
             print("Exit")
             break
         else:
