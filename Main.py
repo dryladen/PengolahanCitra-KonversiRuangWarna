@@ -76,9 +76,9 @@ def menuPilihFoto(foto1, foto2, foto3):
     print("=" * 64)
     print(
         """
-    |  1. Foto pemandangan (terang)  |
-    |  2. Foto bunga (sedang)        |
-    |  3. Foto rubik (gelap)         |
+    |  1. Bunga Mawar       |
+    |  2. Bunga Geranium    |
+    |  3. Bola Tenis        |
     """
     )
     print("=" * 64)
@@ -361,9 +361,9 @@ def segmentationColorSpace(foto):
 
 def main():
     global x_start, y_start, x_end, y_end, cropping, getROI
-    fotoPemandangan = "bola"
+    fotoPemandangan = "mawar"
     fotoBunga = "Foto bunga"
-    fotoRubik = "Foto rubik"
+    fotoRubik = "bola"
 
     foto = fotoPemandangan
     while True:
@@ -380,7 +380,7 @@ def main():
         |  2. Konversi Ruang Warna  |
         |  3. Histogram             |
         |  4. Image Enchancement    |
-        |  5. Segmentation   |
+        |  5. Segmentation       |
         |  6. Exit Program          |
         """
         )
