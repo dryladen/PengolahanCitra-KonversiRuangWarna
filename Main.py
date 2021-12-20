@@ -357,11 +357,11 @@ def cannyEdgeDetector(foto):
 
 def main():
     global x_start, y_start, x_end, y_end, cropping, getROI
-    fotoPemandangan = "mawar"
-    fotoBunga = "Foto bunga"
-    fotoRubik = "bola"
+    bungaMawar = "mawar"
+    bungaGeranium = "Foto bunga"
+    bola = "bola"
 
-    foto = fotoPemandangan
+    foto = bungaMawar
     while True:
         x_start, y_start, x_end, y_end = 0, 0, 0, 0
         cropping = False
@@ -384,7 +384,7 @@ def main():
         print("=" * 64)
         menuUtama = input("Masukan pilihan : ")
         if menuUtama == "1":
-            foto = menuPilihFoto(fotoPemandangan, fotoBunga, fotoRubik)
+            foto = menuPilihFoto(bungaMawar, bungaGeranium, bola)
             os.system("cls")
         elif menuUtama == "2":
             menuKonversiRuangWarna(foto)
