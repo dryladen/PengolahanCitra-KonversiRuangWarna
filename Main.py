@@ -4,8 +4,8 @@ import os  # library untuk clear screen
 from matplotlib import pyplot as plt  # untuk menampilkan histogram
 
 
-def KonversiWarna(foto, warna, judul):
-    banding = np.hstack((foto, warna))
+def bandingGambar(foto1, foto2, judul):
+    banding = np.hstack((foto1, foto2))
     cv.imshow(judul, banding)  # untuk menampilkan foto ke layar
     cv.waitKey()  # menunggu inputan untuk menutup windows foto
 
@@ -40,23 +40,23 @@ def menuKonversiRuangWarna(gambar):
     if menuKonversi == "1":
         # untuk konversi ruang warna
         warna = cv.cvtColor(foto, cv.COLOR_BGR2HLS)
-        KonversiWarna(foto, warna, "RGB ke HLS")
+        bandingGambar(foto, warna, "RGB ke HLS")
     elif menuKonversi == "2":
         # untuk konversi ruang warna
         warna = cv.cvtColor(foto, cv.COLOR_BGR2HSV)
-        KonversiWarna(foto, warna, "RGB ke HSV")
+        bandingGambar(foto, warna, "RGB ke HSV")
     elif menuKonversi == "3":
         # untuk konversi ruang warna
         warna = cv.cvtColor(foto, cv.COLOR_BGR2YUV)
-        KonversiWarna(foto, warna, "RGB ke YUV")
+        bandingGambar(foto, warna, "RGB ke YUV")
     elif menuKonversi == "4":
         # untuk konversi ruang warna
         warna = cv.cvtColor(foto, cv.COLOR_BGR2LUV)
-        KonversiWarna(foto, warna, "RGB ke LUV")
+        bandingGambar(foto, warna, "RGB ke LUV")
     elif menuKonversi == "5":
         # untuk konversi ruang warna
         warna = cv.cvtColor(foto, cv.COLOR_BGR2LAB)
-        KonversiWarna(foto, warna, "RGB ke LAB")
+        bandingGambar(foto, warna, "RGB ke LAB")
     else:
         print("Piihan tidak ada")
         input("Tekan apa saja untuk melanjutkan")
@@ -215,40 +215,29 @@ def menuHistogram(gambar):
 
 def sharpening(foto):
     kernel = np.array([[0, -1, 0], [-1, 5, -1], [0, -1, 0]])
-
     image_sharp = cv.filter2D(src=foto, ddepth=-1, kernel=kernel)
-
-    cv.imshow("Original", foto)
-    cv.imshow("Sharpening", image_sharp)
-    cv.waitKey(0)
+    bandingGambar(foto, image_sharp, "Sharpening")
 
 
 def imageSretching(foto):
     imageSretch = cv.addWeighted(foto, 1, np.zeros(foto.shape, foto.dtype), 1, 0)
-    cv.imshow("Original Image", foto)
-    cv.imshow("Contrast Sretching", imageSretch)
-    cv.waitKey(0)
+    bandingGambar(foto, imageSretch, "Stretching")
 
 
 def imageBrightness(foto):
     hsv = cv.cvtColor(foto, cv.COLOR_BGR2HSV)
-    nilai = int(input("Masukan nilai brightness : "))
-    # nilai = 10
+    nilai = int(input("Masukan nilai brightness [ > 20 ] : "))
     # dengan proses split hsv
     h, s, v = cv.split(hsv)
     v += nilai
     hsv = cv.merge((h, s, v))
     brightness_img = cv.cvtColor(hsv, cv.COLOR_HSV2BGR)
-    cv.imshow("original", foto)
-    cv.imshow("bright", brightness_img)
-    cv.waitKey(0)
+    bandingGambar(foto, brightness_img, "Brightness")
 
 
 def imageBlur(foto):
     imgBlur = cv.GaussianBlur(foto, (7, 7), 0)
-    cv.imshow("Original", foto)
-    cv.imshow("Blur Image", imgBlur)
-    cv.waitKey(0)
+    bandingGambar(foto, imgBlur, "Blur")
 
 
 def imageEnchancement(foto):
