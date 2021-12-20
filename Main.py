@@ -224,22 +224,6 @@ def sharpening(foto):
     bandingGambar(foto, image_sharp, "Sharpening")
 
 
-def imageSretching(foto):
-    imageSretch = cv.addWeighted(foto, 1, np.zeros(foto.shape, foto.dtype), 1, 0)
-    bandingGambar(foto, imageSretch, "Stretching")
-
-
-# def imageBrightness(foto):
-#     hsv = cv.cvtColor(foto, cv.COLOR_BGR2HSV)
-#     nilai = int(input("Masukan nilai brightness [ > 20 ] : "))
-#     # dengan proses split hsv
-#     h, s, v = cv.split(hsv)
-#     v += nilai
-#     hsv = cv.merge((h, s, v))
-#     brightness_img = cv.cvtColor(hsv, cv.COLOR_HSV2BGR)
-#     bandingGambar(foto, brightness_img, "Brightness")
-
-
 def imageBlur(foto):
     imgBlur = cv.GaussianBlur(foto, (7, 7), 0)
     bandingGambar(foto, imgBlur, "Blur")
@@ -254,7 +238,7 @@ def imageEnchancement(foto):
             """
         |  1. Image Sharpening   |
         |  2. Image Blur         |
-        |  4. Kembali ke menu    |
+        |  3. Kembali ke menu    |
         """
         )
         print("=" * 64)
@@ -263,7 +247,7 @@ def imageEnchancement(foto):
             sharpening(gambar)
         elif menu1 == "2":
             imageBlur(gambar)
-        elif menu1 == "4":
+        elif menu1 == "3":
             break
         else:
             print("Pilihan tidak ada")
@@ -296,7 +280,6 @@ def segmentationColorSpace(foto):
     global x_start, y_start, x_end, y_end, cropping, getROI
     image = fotoResize(foto)
     clone = image.copy()
-
     cv.namedWindow("image")
     cv.setMouseCallback("image", click_and_crop)
 
@@ -332,18 +315,16 @@ def segmentationColorSpace(foto):
                 hsvRoi[:, :, 2].max(),
             )
         )
-
     cv.destroyAllWindows()
-
     hsv = cv.cvtColor(image, cv.COLOR_BGR2HSV)
     blur = cv.medianBlur(hsv, 11)
-
     lower = np.array(
         [hsvRoi[:, :, 0].min(), hsvRoi[:, :, 1].min(), hsvRoi[:, :, 2].min()]
     )
     upper = np.array(
         [hsvRoi[:, :, 0].max(), hsvRoi[:, :, 1].max(), hsvRoi[:, :, 2].max()]
     )
+
     mask = cv.inRange(blur, lower, upper)
     res = cv.bitwise_and(image, image, mask=mask)
     bandingGambar(image, res, "Segmentation")
