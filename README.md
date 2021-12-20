@@ -7,7 +7,7 @@ Program ini menggunakan bahasa pemrograman Python
 Pastikan anda sudah menginstall
 
 - Python (versi 3.7.x - versi terbaru)
-- library openCV pip `install opencv-python`
+- library openCV `pip install opencv-python`
 - library matplotlib `pip install matplotlib`
 
 Contributor :
